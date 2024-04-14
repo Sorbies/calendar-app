@@ -1,23 +1,29 @@
-import { Inter } from "next/font/google";
+import "bootstrap/dist/css/bootstrap.min.css";
+import "bootstrap-icons/font/bootstrap-icons.css";
 
 import Sidebar from "./components/sidebar";
 
 import "./globals.css";
-
-const inter = Inter({ subsets: ["latin"] });
+import Header from "./Header.js";
+import Head from 'next/head';
 
 export const metadata = {
-  title: "OrgAN1ze",
-  description: "Web Design Project by Team Lisan Al Gaib",
+  title: "IMPERIUM",
+  description: "Organization tool with calander, notes, task lists, and clock.",
 };
 
 export default function RootLayout({ children }) {
   return (
     <html lang="en">
-      <body className={inter.className}>
-        <Sidebar/>
-        {children}
-      </body>
+      <Head>
+        <title>{metadata.title}</title>
+        <meta name="description" content={metadata.description} />
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500&display=swap" />
+      </Head>
+
+      <Header />
+      <Sidebar />
+      {children}
     </html>
   );
 }
