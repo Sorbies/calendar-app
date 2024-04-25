@@ -2,17 +2,20 @@
     display: flex;
     justify-content: space-between;
     align-items: center;
-    background-color: #333; /* Dark background color */
-    color: white; /* Text color */
+    background-color: #333;
+    color: white; 
     padding: 1rem;
   }
   
   .logo {
-    margin-right: 1rem; /* Add some space between logo and title */
+    margin-right: 0;
   }
 
   .title {
     font-size: 1.5rem;
+    margin: 0 auto;
+    font-family: Georgia, 'Times New Roman', Times, serif;
+    letter-spacing: 8px;
   }
   
   .buttons {
@@ -21,8 +24,8 @@
   }
   
   .button {
-    background-color: #555; /* Darker button color */
-    color: white; /* Button text color */
+    background-color: #555; 
+    color: white;
     padding: 0.5rem 1rem;
     border: none;
     border-radius: 0.25rem;
@@ -30,6 +33,6 @@
   }
   
   .button:hover {
-    background-color: #777; /* Darker color on hover */
+    background-color: #777;
   }
   

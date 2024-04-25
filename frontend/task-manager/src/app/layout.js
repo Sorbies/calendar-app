@@ -21,9 +21,13 @@ export default function RootLayout({ children }) {
         <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500&display=swap" />
       </Head>
 
-      <Header />
-      <Sidebar />
-      {children}
+      <div style={{ position: 'relative' }}>
+        <Header />
+        <div style={{ position: 'absolute', top: '-28px', left: 0 }}>
+          <Sidebar />
+        </div>
+        <div style={{ marginLeft: '215px', paddingTop: '25px', paddingRight: '20px' }}>{children}</div>
+      </div>
     </html>
   );
 }
