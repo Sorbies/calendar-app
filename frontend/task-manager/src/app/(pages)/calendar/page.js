@@ -1,25 +1,22 @@
 'use client'
-import { Calendar, momentLocalizer } from 'react-big-calendar';
 import moment from 'moment';
-import 'react-big-calendar/lib/css/react-big-calendar.css';
+import Calendar from "./calendar.js";
 
-const localizer = momentLocalizer(moment);
+// array storing all the events
+const events = [
+  {
+    start:moment('2024-05-07T05:30:00').toDate(),
+    end:moment('2024-05-07T07:30:00').toDate(),
+    title: "Databases Project Due",
+  },
+  {
+    start:moment('2024-05-09T05:30:00').toDate(),
+    end:moment('2024-05-09T07:30:00').toDate(),
+    title: "Troeger Quiz #3",
+  },
+]
 
 export default function Page() {
-    // Dummy event data
-    const events = [
-      {
-        title: 'Event 1',
-        start: new Date(2024, 3, 20), // April 20, 2024
-        end: new Date(2024, 3, 22), // April 22, 2024
-      },
-      {
-        title: 'Event 2',
-        start: new Date(2024, 3, 25), // April 25, 2024
-        end: new Date(2024, 3, 27), // April 27, 2024
-      },
-    ];
-  
     return (
       <>
         <div style={{textAlign:'left'}}>
@@ -28,7 +25,6 @@ export default function Page() {
 
         <div style={{ height: 500 }}>
           <Calendar
-            localizer={localizer}
             events={events}
             startAccessor="start"
             endAccessor="end"

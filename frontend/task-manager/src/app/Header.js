@@ -13,21 +13,6 @@ export default function Header() {
          <Image src={Logo} alt="Logo" width={40} height={40}/>
       </div>
       <div className={styles.title}>IMPERIUM</div>
-      {/* <div className={styles.buttons}>
-        <Button variant="dark">
-          <i className="bi bi-box-arrow-right"></i>
-        </Button>
-        <Button variant="dark">
-          <i className="bi bi-brightness-high"></i>
-        </Button>
-        <Button variant="dark">
-          <i className="bi bi-gear-wide-connected"></i>
-        </Button>
-        <Button variant="dark">
-          <i className="bi bi-person-circle"></i>
-        </Button>
-      </div> */}
-
       <div className={styles.buttons}>
         <Button variant="dark" data-bs-toggle="dropdown" aria-expanded="false">
           <i className="bi bi-list"></i>
