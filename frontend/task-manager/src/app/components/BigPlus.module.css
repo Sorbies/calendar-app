@@ -1,0 +1,18 @@
+.adderButton {
+    border-radius: 50%;
+    height: 100px;
+    width: 100px;
+
+    --bs-btn-bg: rgb(255, 232, 98);
+    --bs-btn-border-color: rgb(216, 158, 0);
+
+    --bs-btn-hover-bg: gold;
+    --bs-btn-hover-border-color: rgb(179, 131, 0);
+
+    --bs-btn-active-bg: rgb(201, 171, 1);
+    --bs-btn-active-border-color: rgb(97, 71, 0);
+}
+
+.icon {
+    font-size: 50px;
+}
