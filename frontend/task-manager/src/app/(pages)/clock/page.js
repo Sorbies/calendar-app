@@ -3,7 +3,7 @@
 export default function Page() {
     return (
         <>
-            This is the CLOCK page
+            This is the NOTES page
         </>
     );
 }

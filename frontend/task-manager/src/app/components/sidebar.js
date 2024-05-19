@@ -1,35 +1,5 @@
 "use client";
 
-// import Link from "next/link";
-// import { usePathname } from 'next/navigation'
-// import styles from "./sidebar.module.css"
-
-// export default function Sidebar() {
-//     const pathname = usePathname(); // Get the current pathname
-
-//     return (
-//         <div className={styles.sidebar}>
-//             <ul className={`list-group ${styles.list}`}>
-//                 <li className={`list-group-item ${styles.item}`}>
-//                     <Link href="/" className={styles.link}>Home</Link>
-//                 </li>
-//                 <li className={`list-group-item ${styles.item}`}>
-//                     <Link href="/calendar" className={styles.link}>Calendar</Link>
-//                 </li>
-//                 <li className={`list-group-item ${styles.item}`}>
-//                     <Link href="/todo" className={styles.link}>To Do</Link>
-//                 </li>
-//                 <li className={`list-group-item ${styles.item}`}>
-//                     <Link href="/clock" className={styles.link}>Clock</Link>
-//                 </li>
-//             </ul>
-//             {pathname === '/calendar' && (
-//                 <button className={styles.button}>Button for Calendar</button>
-//             )}
-//         </div>
-//     );
-// }
-
 import { useState } from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
@@ -86,7 +56,7 @@ export default function Sidebar() {
         </li>
         <li className={`list-group-item ${styles.item}`}>
           <Link href="/clock" className={styles.link}>
-            Clock
+            Notes
           </Link>
         </li>
       </ul>
