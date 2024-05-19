@@ -1,7 +1,7 @@
 import "bootstrap/dist/css/bootstrap.css";
 import "bootstrap-icons/font/bootstrap-icons.css";
 
-import Sidebar from "./components/Sidebar";
+import Sidebar from "./components/sidebar";
 
 import "./globals.css";
 import Header from "./Header.js";
@@ -21,14 +21,14 @@ export default function RootLayout({ children }) {
         <meta name="description" content={metadata.description} />
         <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500&display=swap" />
       </Head>
-      <BootstrapJS />
-      <div style={{ position: 'relative' }}>
+      <body style={{ position: 'relative' }}>
+        <BootstrapJS />
         <Header />
         <div style={{ position: 'absolute', top: '-28px', left: 0 }}>
           <Sidebar />
         </div>
         <div style={{ marginLeft: '215px', paddingTop: '25px', paddingRight: '20px' }}>{children}</div>
-      </div>
+      </body>
     </html>
   );
 }

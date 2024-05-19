@@ -3,7 +3,6 @@ import Image from "next/image";
 import Logo from "./squareLogo.png";
 import styles from "./Header.module.css";
 import { Button } from "react-bootstrap";
-import 'bootstrap/dist/js/bootstrap.bundle';
 
 
 export default function Header() {
