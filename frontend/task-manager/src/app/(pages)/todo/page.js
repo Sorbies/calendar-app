@@ -2,14 +2,14 @@
 
 import React, { useState } from 'react';
 import 'bootstrap/dist/css/bootstrap.min.css';
-import { Button, Collapse } from 'react-bootstrap';
+import { Button, Collapse, Form } from 'react-bootstrap';
 import styles from './todo.module.css';
 
 export default function Page() {
     const [tasks, setTasks] = useState([
-        { id: 1, text: "Task 1", completed: false },
-        { id: 2, text: "Task 2", completed: false },
-        { id: 3, text: "Task 3", completed: false }
+        { id: 1, title: "Task 1", description: "Description for Task 1", dueDate: "2023-05-20", completed: false },
+        { id: 2, title: "Task 2", description: "Description for Task 2", dueDate: "2023-05-21", completed: false },
+        { id: 3, title: "Task 3", description: "Description for Task 3", dueDate: "2023-05-22", completed: false }
     ]);
 
     const [showCompleted, setShowCompleted] = useState(false);
@@ -47,7 +47,7 @@ export default function Page() {
 
             <div className="mt-4 d-flex justify-content-center align-items-center flex-column">
                 {tasks.map(task => (
-                    <div key={task.id} className="form-check">
+                    <div key={task.id} className={`form-check ${styles.taskContainer}`}>
                         <input
                             type="checkbox"
                             className="form-check-input"
@@ -55,9 +55,13 @@ export default function Page() {
                             checked={task.completed}
                             onChange={() => toggleTaskCompletion(task.id)}
                         />
-                        <label className={"form-check-label " + (task.completed ? styles.completed : "")} htmlFor={`task-${task.id}`} style={{ fontSize: "1.5rem" }}>
-                            {task.text}
-                        </label>
+                        <div className={styles.taskContent}>
+                            <label className={`form-check-label ${task.completed ? styles.completed : ""}`} htmlFor={`task-${task.id}`} style={{ fontSize: "1.5rem" }}>
+                                {task.title}
+                            </label>
+                            <p className={styles.taskDescription}>{task.description}</p>
+                            <p className={styles.taskDueDate}>Due: {task.dueDate}</p>
+                        </div>
                     </div>
                 ))}
 
@@ -66,7 +70,11 @@ export default function Page() {
                         <h2>Completed Tasks</h2>
                         <ul>
                             {completedTasks.map(task => (
-                                <li key={task.id}>{task.text}</li>
+                                <li key={task.id}>
+                                    <strong>{task.title}</strong><br />
+                                    {task.description}<br />
+                                    Due: {task.dueDate}
+                                </li>
                             ))}
                         </ul>
                     </div>

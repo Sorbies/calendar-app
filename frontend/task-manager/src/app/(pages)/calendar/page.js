@@ -1,7 +1,7 @@
-"use client";
-import moment from "moment";
-import Calendar from "./calendar.js";
-import React, { useCallback, useState } from 'react'
+import moment from 'moment';
+import EventAdder from "@/app/components/EventAdder";
+import getRandomQuotes from '@/app/lib/getRandomQuotes.js';
+import Calendar, { handleSelectSlot, handleSelectEvent } from "./calendar.js";
 
 // array storing all the events - temporary for testing
 const events = [
@@ -18,49 +18,35 @@ const events = [
   },
 ];
 
-export default function Page() {
-  
-  // functional, but doesnt actually add the event yet
-  // needs to be connected to the db of the users events
-  const [myEvents, setEvents] = useState(events)
 
-  const handleSelectSlot = useCallback(
-    ({ start, end }) => {
-      const title = window.prompt('New Event name')
-      if (title) {
-        setEvents((prev) => [...prev, { start, end, title }])
-      }
-    },
-    [setEvents]
-  )
+export default async function Page() {
 
-  const handleSelectEvent = useCallback(
-    (event) => {
-      // first check if desc property exists - avoid displaying undefined
-      const description = event.desc ? event.desc : '';
-      window.alert(`${event.title}\n${description}`);
-    },
-    []
-  );
+    const randomNumber = Math.floor(Math.random() * 50);
+    const data = await getRandomQuotes();
+    const randomQuote = data[randomNumber];
 
-  return (
-    <>
-      <div style={{ textAlign: "left" }}>
-        <h5>This is where our insperational quote goes</h5>
-      </div>
+    return (
+      <>
+        <div style={{textAlign:'left'}}>
+          <h4>{randomQuote["q"]}</h4>
+          <h6>-{randomQuote["a"]}</h6>
+          Inspirational quotes provided by <a href="https://zenquotes.io/" target="_blank">ZenQuotes API</a>
+        </div>
 
-      <div style={{ height: 500 }}>
-        <Calendar
-          defaultView={"week"} //something to consider
-          events={events}
-          startAccessor="start"
-          endAccessor="end"
-          style={{ margin: "50px" }}
-          selectable
-          onSelectEvent={handleSelectEvent}
-          onSelectSlot={handleSelectSlot}
-        />
-      </div>
-    </>
-  );
-}
+        <div style={{ height: 500 }}>
+          <Calendar
+            defaultView={"week"} //something to consider
+            events={events}
+            startAccessor="start"
+            endAccessor="end"
+            style={{ margin: "50px" }}
+            selectable
+            onSelectEvent={handleSelectEvent}
+            onSelectSlot={handleSelectSlot}
+          />
+        </div>
+
+        <EventAdder/>
+      </>
+    );
+  }

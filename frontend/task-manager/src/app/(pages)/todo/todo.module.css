@@ -1,3 +1,21 @@
 .completed {
     text-decoration: line-through;
 }
+
+.taskContainer {
+    margin-bottom: 20px;
+}
+
+.taskContent {
+    margin-left: 25px; /* Adjust to align with checkbox */
+}
+
+.taskDescription {
+    font-size: 1rem;
+    color: #666;
+}
+
+.taskDueDate {
+    font-size: 0.875rem;
+    color: #888;
+}
