@@ -1,3 +1,5 @@
+import Todo from "./todo";
+
 import { verifyLogin } from "@/app/lib/authenticationStuff";
 
 export default async function Page() {
@@ -5,7 +7,7 @@ export default async function Page() {
 
     return (
         <>
-            This is the TODO page
+            <Todo/>
         </>
     );
 }
