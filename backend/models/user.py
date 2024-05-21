@@ -25,7 +25,7 @@ class User(db.Model):
             'iat': datetime.utcnow()
         }
         token = jwt.encode(payload, current_app.config['SECRET_KEY'], algorithm='HS256')
-        return token.decode('utf-8')  # Decode the token before returning
+        return token  # Decode the token before returning
 
 
     def verify_token(token):
