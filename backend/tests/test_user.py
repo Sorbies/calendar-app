@@ -23,11 +23,11 @@ def authenticated_request(token):
     print("Authenticated Request:", response.json())
 
 if __name__ == '__main__':
-    register_user('newuser3', 'newuser3@example.com', 'password123456')
-    register_user('newuser2', 'newuser2@example.com', 'password12345')
-    register_user('newuser1', 'newuser1@example.com', 'password1234')
-    register_user('newuser', 'newuser@example.com', 'password123')
-    token = login_user('newuser3', 'password123456')
+    register_user('rana', 'rana@example.com', 'pass4rana')
+    # register_user('user2', 'user2@example.com', 'passwordabcde')
+    # register_user('user1', 'user1@example.com', 'passwordabcd')
+    # register_user('user', 'user@example.com', 'passwordabc')
+    token = login_user('rana', 'pass4rana')
     if token:
         authenticated_request(token)
 
