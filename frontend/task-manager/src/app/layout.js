@@ -1,12 +1,10 @@
 import "bootstrap/dist/css/bootstrap.css";
 import "bootstrap-icons/font/bootstrap-icons.css";
 
-import Sidebar from "./components/sidebar";
 
 import "./globals.css";
-import Header from "./Header.js";
 import Head from 'next/head';
-import BootstrapJS from "./BootstrapJS";
+import BootstrapJS from "@/app/components/BootstrapJS";
 
 export const metadata = {
   title: "IMPERIUM",
@@ -23,11 +21,7 @@ export default function RootLayout({ children }) {
       </Head>
       <body style={{ position: 'relative' }}>
         <BootstrapJS />
-        <Header />
-        <div style={{ position: 'absolute', top: '-28px', left: 0 }}>
-          <Sidebar />
-        </div>
-        <div style={{ marginLeft: '215px', paddingTop: '25px', paddingRight: '20px' }}>{children}</div>
+        {children}
       </body>
     </html>
   );

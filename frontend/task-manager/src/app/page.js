@@ -1,11 +1,7 @@
-import SignUp from "./components/SignUp";
+import { redirect } from "next/navigation";
 
 export default function Home() {
+  redirect("/home");
 
-  return (
-    <>
-      This is the HOME page <br/>
-      <SignUp />
-    </>
-  );
+  return "You shouldn't see this!";
 }
