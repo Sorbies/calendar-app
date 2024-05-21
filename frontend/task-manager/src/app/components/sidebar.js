@@ -70,7 +70,7 @@ export default function Sidebar() {
     <div className={styles.sidebar}>
       <ul className={`list-group ${styles.list}`}>
         <li className={`list-group-item ${styles.item}`}>
-          <Link href="/" className={styles.link}>
+          <Link href="/home" className={styles.link}>
             Home
           </Link>
         </li>
