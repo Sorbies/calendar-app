@@ -1,6 +1,9 @@
-'use client'
+import { verifyLogin } from "@/app/lib/authenticationStuff";
 
-export default function Page() {
+
+export default async function Page() {
+    await verifyLogin();
+
     return (
         <>
             This is the CLOCK page

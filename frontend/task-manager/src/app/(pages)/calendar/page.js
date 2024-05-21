@@ -4,6 +4,7 @@ import Calendar from "./calendar.js";
 import EventAdder from "@/app/components/EventAdder";
 
 import getRandomQuotes from '@/app/lib/getRandomQuotes.js';
+import { verifyLogin } from '@/app/lib/authenticationStuff.js';
 
 // array storing all the events
 const events = [
@@ -21,6 +22,7 @@ const events = [
 
 
 export default async function Page() {
+    await verifyLogin();
 
     const randomNumber = Math.floor(Math.random() * 50);
     const data = await getRandomQuotes();
