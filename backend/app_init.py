@@ -19,6 +19,9 @@ def create_app():
            # Ensure models are imported before db.create_all()
         from models.user import User
         from models.task import Task
+        from models.calendar import Calendar
+        from models.event import Event, RecurringEvent
+  
         # from models.password_reset_token import PasswordResetToken
 
         db.create_all()  # This will now be aware of the User model
@@ -26,8 +29,15 @@ def create_app():
     # Import blueprints after model and database initialization
     from routes.task_routes import tasks_blueprint
     from routes.auth_routes import auth_blueprint
+    from routes.calendar_routes import calendars_blueprint
+    from routes.event_routes import events_blueprint
+ 
+
     app.register_blueprint(tasks_blueprint)
     app.register_blueprint(auth_blueprint, url_prefix='/auth')
+    app.register_blueprint(calendars_blueprint)
+    app.register_blueprint(events_blueprint)
+
 
     return app
 
