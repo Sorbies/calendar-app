@@ -29,6 +29,7 @@ Languages: JS, Python
 
 8. Open another terminal
 9. Cd to backend/
+9. Run `pip install -r requirements.txt`
 10. Run `flask --app app run`
 11. Visit http://127.0.0.1:5000
 
