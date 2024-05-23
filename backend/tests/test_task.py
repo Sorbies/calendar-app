@@ -1,3 +1,4 @@
+# test_task.py
 import requests
 from test_user import login_user
 import sys
@@ -27,7 +28,13 @@ def delete_all_tasks(token):
 # Function to create predefined tasks for testing
 def create_predefined_tasks(token):
     tasks = [
-        {'title': 'Dishwashing', 'content': 'Task 1: Wash dishes', 'completed': False},
+        {
+            'title': 'Dishwashing',
+            'content': 'Task 1: Wash dishes',
+            'completed': False,
+            'start_date_time': '2024-05-30T09:00:00',
+            'end_date_time': '2024-05-30T10:00:00'
+        },
     ]
     ids = []
     for task in tasks:
@@ -45,7 +52,14 @@ def create_predefined_tasks(token):
 # Function to test creating a new task
 def test_create_task(token, user):
     url = BASE_URL + '/tasks'
-    data = {'title': 'Test Task', 'content': 'Test Task Content', 'username': user, 'completed': False}
+    data = {
+        'title': 'Test Task',
+        'content': 'Test Task Content',
+        'username': user,
+        'completed': False,
+        'start_date_time': '2024-06-01T09:00:00',
+        'end_date_time': '2024-06-01T10:00:00'
+    }
     try:
         response = requests.post(url, json=data, headers=authenticated_request(token))
         response.raise_for_status()  # Raise an exception for HTTP errors
@@ -77,7 +91,13 @@ def test_get_task(token, task_id):
 # Function to test updating a task by ID
 def test_update_task(token, task_id, new_title, new_content, completed):
     url = BASE_URL + f'/tasks/{task_id}'
-    data = {'title': new_title, 'content': new_content, 'completed': completed}
+    data = {
+        'title': new_title,
+        'content': new_content,
+        'completed': completed,
+        'start_date_time': '2024-06-01T09:00:00',
+        'end_date_time': '2024-06-01T10:00:00'
+    }
     try:
         response = requests.put(url, json=data, headers=authenticated_request(token))
         response.raise_for_status()  # Raise an exception for HTTP errors
@@ -117,5 +137,3 @@ def main():
 
 if __name__ == "__main__":
     main()
-
-
