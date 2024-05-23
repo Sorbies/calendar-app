@@ -3,6 +3,10 @@
     height: 100px;
     width: 100px;
 
+    position: fixed;
+    bottom: 50px;
+    right: 50px;
+
     --bs-btn-bg: rgb(255, 232, 98);
     --bs-btn-border-color: rgb(216, 158, 0);
 
