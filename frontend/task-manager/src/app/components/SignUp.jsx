@@ -97,7 +97,7 @@ export default function SignUp({ initShow = false, initMsg = "", initStyle = "",
             <div className={containerStyle}>
                 {/* Alert */}
                 <div id="alertContainer">
-                    {showAlertMsg ? <Alert variant={alertStyle} onClick={() => setShowAlertMsg(false)} dismissible>
+                    {showAlertMsg ? <Alert variant={alertStyle} onClick={() => setShowAlertMsg(false)} dismissible name='authAlert' role='status'>
                         {alertMsg}
                     </Alert> : ""}
                 </div>
@@ -115,12 +115,12 @@ export default function SignUp({ initShow = false, initMsg = "", initStyle = "",
 
                     <Form.Group className="mb-3" controlId="passwordField">
                         <Form.Label>Password</Form.Label>
-                        <Form.Control type="password" placeholder="Password" name="password" />
+                        <Form.Control type="password" placeholder="Password" name="password" role='textbox'/>
                     </Form.Group>
 
                     <ButtonToolbar>
                         <ButtonGroup>
-                            <Button className="me-2" variant="primary" type="submit">
+                            <Button className="me-2" variant="primary" type="submit" name='submitSignin' role="button">
                                 Submit
                             </Button>
                         </ButtonGroup>
