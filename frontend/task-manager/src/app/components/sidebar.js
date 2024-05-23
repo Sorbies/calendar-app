@@ -139,7 +139,7 @@ export default function Sidebar() {
           </Link>
         </li>
         <li className={`list-group-item ${styles.item}`}>
-          <Link href="/clock" className={styles.link}>
+          <Link href="/notes" className={styles.link}>
             Notes
           </Link>
         </li>
