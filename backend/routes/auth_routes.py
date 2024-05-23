@@ -15,6 +15,8 @@ def token_required(f):
         try:
             token = token.split(" ")[1]  # Assuming token is prefixed with "Bearer "
             current_user = User.verify_token(token)
+            if current_user is None:
+                return jsonify({'message': 'Token is invalid'}), 403
         except:
             return jsonify({'message': 'Token is invalid!'}), 403
         return f(current_user, *args, **kwargs)
@@ -53,7 +55,6 @@ def secured_route(current_user):
         'message': 'Congratulations! You have accessed a protected route.',
         'user': current_user.username
     })
-
 
 
 
