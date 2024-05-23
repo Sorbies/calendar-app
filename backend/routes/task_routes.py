@@ -13,6 +13,7 @@ def create_task(current_user):
     data = request.get_json()
     try:
         new_task = Task(
+            title=data['title'],  # Add title to task creation
             content=data['content'],
             user_id=current_user.id,
             completed=data.get('completed', False)  # Default to False if not provided
@@ -46,6 +47,7 @@ def update_task(current_user, id):
     data = request.get_json()
     try:
         task = Task.query.filter_by(id=id, user_id=current_user.id).one()
+        task.title = data.get('title', task.title)  # Add title to task update
         task.content = data.get('content', task.content)
         task.completed = data.get('completed', task.completed)
         db.session.commit()
