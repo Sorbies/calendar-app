@@ -18,7 +18,7 @@ class User(db.Model):
     def check_password(self, password):
         return check_password_hash(self.password_hash, password)
 
-    def generate_token(self, expires_in=3600):
+    def generate_token(self, expires_in=86400):
         payload = {
             'id': self.id,
             'exp': datetime.utcnow() + timedelta(seconds=expires_in),
