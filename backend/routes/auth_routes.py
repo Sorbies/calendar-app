@@ -1,7 +1,7 @@
 # routes/auth_routes.py
-from flask import Blueprint, request, jsonify, current_app
+from flask import Blueprint, request, jsonify, current_app, redirect, url_for, session
 from models.user import User
-from app_init import db
+from app_init import db, oauth
 from functools import wraps
 
 auth_blueprint = Blueprint('auth', __name__)
@@ -55,6 +55,36 @@ def secured_route(current_user):
         'message': 'Congratulations! You have accessed a protected route.',
         'user': current_user.username
     })
+
+@auth_blueprint.route('/login/google')
+def login_google():
+    google = oauth.create_client('google')
+    redirect_uri = url_for('auth.auth_google', _external=True)
+    return google.authorize_redirect(redirect_uri)
+
+@auth_blueprint.route('/auth/google')
+def auth_google():
+    google = oauth.create_client('google')
+    token = google.authorize_access_token()
+    resp = google.get('userinfo')
+    user_info = resp.json()
+    session['email'] = user_info['email']
+
+    # Here you can handle user registration/login in your database
+    user = User.query.filter_by(email=user_info['email']).first()
+    if not user:
+        user = User(username=user_info['email'], email=user_info['email'])
+        db.session.add(user)
+        db.session.commit()
+
+    token = user.generate_token()
+    return jsonify({'message': 'Login successful', 'token': token})
+
+@auth_blueprint.route('/logout')
+def logout():
+    for key in list(session.keys()):
+        session.pop(key)
+    return redirect('/')
 
 
 

@@ -111,7 +111,7 @@ def authenticated_request(token):
 
 # Main function to execute test cases
 def main():
-    token = login_user('rana', 'pass4rana')
+    token = login_user('selma', 'pass4selma')
     if token:
         # Create a calendar first, since events are linked to calendars
         calendar_id = create_calendar(token, 'Personal Calendar', 'red')

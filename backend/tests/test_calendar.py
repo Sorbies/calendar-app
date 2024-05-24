@@ -72,7 +72,7 @@ def authenticated_request(token):
 
 # Main function to execute test cases
 def main():
-    token = login_user('rana', 'pass4rana')
+    token = login_user('selma', 'pass4selma')
     if token:
         calendar_id = create_calendar(token, 'Work Calendar', 'blue')
         get_calendars(token)
