@@ -20,7 +20,7 @@ export async function sendRegisterData(formData) {
     });
 
     const data = await response.json();
-    console.log(data);
+    //console.log(data);
 
     if ('error' in data) {
         console.log("Error:", data['error']);
@@ -48,7 +48,7 @@ export async function sendLoginData(formData) {
     });
 
     const data = await response.json();
-    console.log(data);
+    //console.log(data);
 
     if ('error' in data) {
         console.log("Error:", data['error']);
@@ -75,7 +75,7 @@ export async function validateToken() {
 export async function verifyLogin() {
     if (!cookies().has('token')) {redirect("/login-error");}
     const validation = await validateToken();
-    if (!cookies(validation)) {redirect("/login-error");} 
+    if (!validation) {redirect("/login-error");} 
 }
 
 export async function setTokenCookie(token) {
