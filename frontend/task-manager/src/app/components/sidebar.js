@@ -1,10 +1,12 @@
-"use client";
+"use client"
 
 // Import statements
 import { useState } from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import styles from "./sidebar.module.css";
+import SidebarCalendar from "./sidebarCalendar";
+import SidebarTodo from "./sidebarTodo";
 
 export default function Sidebar() {
   // Get the current pathname to determine which section is active
@@ -144,162 +146,12 @@ export default function Sidebar() {
           </Link>
         </li>
       </ul>
-      {pathname === "/calendar" && (
-        <div className={styles.calendarListContainer}>
-          <div className={styles.calendarList}>
-            {calendarNames.map((name, index) => (
-              <div key={index} className={styles.calendarItem}>
-                <input
-                  type="checkbox"
-                  id={`calendar-${index}`}
-                  checked={selectedCalendars.includes(name)}
-                  onChange={() => handleToggleCalendar(name)}
-                />
-                <label
-                  htmlFor={`calendar-${index}`}
-                  className={styles.calendarLabel}
-                >
-                  {name}
-                </label>
-                <div className={styles.dropdownMenu}>
-                  <i
-                    className={`bi bi-three-dots-vertical ${styles.ellipsisButton}`}
-                  />
-                  <div className={styles.dropdownContent}>
-                    <button
-                      onClick={() =>
-                        handleMenuOption("Change Name", name, "calendar")
-                      }
-                    >
-                      Change Name
-                    </button>
-                    <button
-                      onClick={() =>
-                        handleMenuOption("Change Color", name, "calendar")
-                      }
-                    >
-                      Change Color
-                    </button>
-                    <button
-                      onClick={() =>
-                        handleMenuOption("Delete", name, "calendar")
-                      }
-                    >
-                      Delete
-                    </button>
-                  </div>
-                </div>
-              </div>
-            ))}
-          </div>
-          {renamingCalendar && (
-            <form onSubmit={handleRenameCalendar} className={styles.renameForm}>
-              <input
-                type="text"
-                className="form-control"
-                value={newCalendarNameTemp}
-                onChange={(e) => setNewCalendarNameTemp(e.target.value)}
-                placeholder="Rename Calendar"
-              />
-              <button className="btn btn-primary mt-2" type="submit">
-                Rename
-              </button>
-              <button
-                className="btn btn-secondary mt-2"
-                onClick={() => setRenamingCalendar(null)}
-              >
-                Cancel
-              </button>
-            </form>
-          )}
-          <div className={styles.addListContainer}>
-            <input
-              type="text"
-              className="form-control"
-              value={newCalendarName}
-              onChange={(e) => setNewCalendarName(e.target.value)}
-              placeholder="New Calendar Name"
-            />
-            <button
-              className="btn btn-primary mt-2"
-              onClick={handleAddCalendar}
-            >
-              Add Calendar
-            </button>
-          </div>
-        </div>
-      )}
-      {pathname === "/todo" && (
-        <div className={styles.todoListContainer}>
-          <div className={styles.todoList}>
-            {todoLists.map((list, index) => (
-              <div key={index} className={styles.todoItem}>
-                <input
-                  type="radio"
-                  id={`todo-${index}`}
-                  name="todoList"
-                  checked={selectedList === list}
-                  onChange={() => handleListSelection(list)}
-                />
-                <label htmlFor={`todo-${index}`} className={styles.todoLabel}>
-                  {list}
-                </label>
-                <div className={styles.dropdownMenu}>
-                  <i
-                    className={`bi bi-three-dots-vertical ${styles.ellipsisButton}`}
-                  />
-                  <div className={styles.dropdownContent}>
-                    <button
-                      onClick={() =>
-                        handleMenuOption("Change Name", list, "list")
-                      }
-                    >
-                      Change Name
-                    </button>
-                    <button
-                      onClick={() => handleMenuOption("Delete", list, "list")}
-                    >
-                      Delete
-                    </button>
-                  </div>
-                </div>
-              </div>
-            ))}
-          </div>
-          {renamingList && (
-            <form onSubmit={handleRenameList} className={styles.renameForm}>
-              <input
-                type="text"
-                className="form-control"
-                value={newListNameTemp}
-                onChange={(e) => setNewListNameTemp(e.target.value)}
-                placeholder="Rename List"
-              />
-              <button className="btn btn-primary mt-2" type="submit">
-                Rename
-              </button>
-              <button
-                className="btn btn-secondary mt-2"
-                onClick={() => setRenamingList(null)}
-              >
-                Cancel
-              </button>
-            </form>
-          )}
-          <div className={styles.addListContainer}>
-            <input
-              type="text"
-              className="form-control"
-              value={newListName}
-              onChange={(e) => setNewListName(e.target.value)}
-              placeholder="New List Name"
-            />
-            <button className="btn btn-primary mt-2" onClick={handleAddList}>
-              Add List
-            </button>
-          </div>
-        </div>
-      )}
-    </div>
+
+      {/* listing  calendars section */}
+      {pathname.includes("/calendar") && (<SidebarCalendar/>)}
+
+
+      {pathname.includes("/todo") && (<SidebarTodo/>)}
+    </div >
   );
 }
