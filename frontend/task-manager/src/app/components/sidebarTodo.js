@@ -54,7 +54,6 @@ export default function SidebarTodo() {
         const todoListNames = todoLists.map(todoObj => todoObj['name']);
         if (newListName.trim() !== "" && !todoListNames.includes(newListName.trim())) {
             const result = await addTodo(newListName);
-            console.log(result);
             forceTodoListRefresh();
 
             setNewListName("");
