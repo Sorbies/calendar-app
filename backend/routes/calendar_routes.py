@@ -61,3 +61,14 @@ def delete_calendar(current_user, id):
         return jsonify({"message": "Calendar deleted"}), 204
     else:
         return jsonify({"error": "Calendar not found"}), 404
+
+# Register error handlers within blueprint
+@calendars_blueprint.app_errorhandler(404)
+def not_found_error(error):
+    return jsonify({"error": "Not Found"}), 404
+
+@calendars_blueprint.app_errorhandler(500)
+def internal_error(error):
+    return jsonify({"error": "Internal Server Error"}), 500
+
+

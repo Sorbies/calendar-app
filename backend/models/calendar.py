@@ -8,6 +8,10 @@ class Calendar(db.Model):
     color = db.Column(db.String(50))
 
     user = db.relationship('User', backref=db.backref('calendars', lazy=True))
+    # events = db.relationship('Event', backref='calendar', lazy=True)
+    events = db.relationship('Event', back_populates='calendar', lazy=True)
+    # recurring_events = db.relationship('RecurringEvent', backref='calendar', lazy=True)
+
 
     def to_dict(self):
         return {
