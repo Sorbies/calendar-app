@@ -22,21 +22,23 @@ export default function Todo() {
     //refreshes the task data without requiring reload whenever selected todoid changes
     useEffect(() => {
         async function updateTasks() {
-            const newTaskData = await getTasksOfTodo(currentTodoId);
+            if (currentTodoId != null) {
+                const newTaskData = await getTasksOfTodo(currentTodoId);
 
-            //modifying the data due to differencies in back/frontend implementations
-            newTaskData.forEach((task) => {
-                //renaming the content key to description
-                task['description'] = task['content'];
-                delete task['content'];
-                //renaming the end_date_time to dueDate
-                task['dueDate'] = task['end_date_time'];
-                delete task['end_date_time'];
-                //modifying the format slightly
-                task['dueDate'] = task['dueDate'].replace('T', ' ');
-            });
+                //modifying the data due to differencies in back/frontend implementations
+                newTaskData.forEach((task) => {
+                    //renaming the content key to description
+                    task['description'] = task['content'];
+                    delete task['content'];
+                    //renaming the end_date_time to dueDate
+                    task['dueDate'] = task['end_date_time'];
+                    delete task['end_date_time'];
+                    //modifying the format slightly
+                    task['dueDate'] = task['dueDate'].replace('T', ' ');
+                });
 
-            setTasks(newTaskData);
+                setTasks(newTaskData);
+            }
         }
         updateTasks();
     }, [refreshTasks, searchParams])

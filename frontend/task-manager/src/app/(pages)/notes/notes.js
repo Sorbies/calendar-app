@@ -24,6 +24,12 @@ export default function Notes() {
     }
   };
 
+  const handleDeleteNote = (index) => {
+    const updatedNotes = [...notes];
+    updatedNotes.splice(index, 1);
+    setNotes(updatedNotes);
+  };
+
   return (
     <>
       <Form onSubmit={handleNoteSubmit} className="mt-4">
@@ -46,6 +52,7 @@ export default function Notes() {
         {notes.length > 0 ? (
           notes.map((note, index) => (
             <div key={index} className={styles.note}>
+              <button className={styles.deleteButton} onClick={() => handleDeleteNote(index)}>X</button>
               <p>{note.text}</p>
               <small className="text-muted">{note.date}</small>
             </div>

@@ -29,9 +29,12 @@ export default function SidebarCalendar() {
             setCalendars(calendars);
 
             const selected = searchParams.get('selected');
-            const selectedList = selected.split(',').map(ele => Number(ele));
-            const matchingCalendars = calendars.filter(cal => selectedList.includes(cal['id']));
-            setSelectedCalendars(matchingCalendars);
+
+            if (selected != null) {
+                const selectedList = selected.split(',').map(ele => Number(ele));
+                const matchingCalendars = calendars.filter(cal => selectedList.includes(cal['id']));
+                setSelectedCalendars(matchingCalendars);
+            }
         }
         getCalendarsFromDB();
     }, [refreshCalendars]);
@@ -110,7 +113,7 @@ export default function SidebarCalendar() {
                                 checked={selectedCalendars.includes(calendar)}
                                 onChange={() => handleToggleCalendar(calendar)} />
                             <label htmlFor={`calendar-${index}`} className={styles.calendarLabel}>
-                                <span style={{color: calendar['color']}}> &#9608; </span>
+                                <span style={{ color: calendar['color'] }}> &#9608; </span>
                                 {calendar['name']}
                             </label>
                             <div className={styles.dropdownMenu}>
@@ -157,7 +160,7 @@ export default function SidebarCalendar() {
                         type="color"
                         className="form-control"
                         value={newCalendarColor}
-                        onChange={(e) => setNewCalendarColor(e.target.value)}/>
+                        onChange={(e) => setNewCalendarColor(e.target.value)} />
                     <input
                         type="text"
                         className="form-control"

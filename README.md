@@ -36,3 +36,7 @@ Languages: JS, Python
 # Usage
 
 TBD - the app isn't done yet
+
+# Final Progress
+
+# Breakdown of Rubric Categories

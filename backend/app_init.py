@@ -1,10 +1,13 @@
 from flask import Flask
 from flask_sqlalchemy import SQLAlchemy
+from authlib.integrations.flask_client import OAuth
+from flask_cors import CORS
 from dotenv import load_dotenv
 import os
 
 load_dotenv()
 db = SQLAlchemy()  # Initialize here, but don't bind to an app yet.
+oauth = OAuth()
 
 def create_app():
     app = Flask(__name__)
@@ -13,6 +16,24 @@ def create_app():
     app.config['SECRET_KEY'] = os.getenv('SECRET_KEY', 'default_fallback_secret_key')
 
     db.init_app(app)
+    CORS(app, supports_credentials=True)
+    oauth.init_app(app)
+
+    google = oauth.register(
+        name='google',
+        client_id=os.getenv("GOOGLE_CLIENT_ID"),
+        client_secret=os.getenv("GOOGLE_CLIENT_SECRET"),
+        server_metadata_url=os.getenv("GOOGLE_META_URL"),
+        access_token_url='https://oauth2.googleapis.com/token',
+        authorize_url='https://accounts.google.com/o/oauth2/auth',
+        authorize_params=None,
+        authorize_access_token_params=None,
+        authorize_redirect_uri=os.getenv("AUTH_REDIRECT_URI") or "http://127.0.0.1:5000/auth/google",
+        response_type='code',
+        client_kwargs={'scope': 'openid profile  https://www.googleapis.com/auth/user.email.read https://www.googleapis.com/auth/user.birthday.read'},
+    )
+
+   
 
     print("creating app")
     with app.app_context():

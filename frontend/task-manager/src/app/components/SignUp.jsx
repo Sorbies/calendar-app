@@ -7,7 +7,7 @@ import Button from 'react-bootstrap/Button';
 import Form from 'react-bootstrap/Form';
 import { Alert, ButtonGroup, ButtonToolbar } from 'react-bootstrap';
 
-import { sendRegisterData, sendLoginData, setTokenCookie } from '../lib/authenticationStuff';
+import { sendRegisterData, sendLoginData, setTokenCookie, loginWithGoogle } from '../lib/authenticationStuff';
 
 import styles from "./SignUp.module.css";
 
@@ -115,7 +115,7 @@ export default function SignUp({ initShow = false, initMsg = "", initStyle = "",
 
                     <Form.Group className="mb-3" controlId="passwordField">
                         <Form.Label>Password</Form.Label>
-                        <Form.Control type="password" placeholder="Password" name="password" role='textbox'/>
+                        <Form.Control type="password" placeholder="Password" name="password" role='textbox' />
                     </Form.Group>
 
                     <ButtonToolbar>
@@ -127,6 +127,11 @@ export default function SignUp({ initShow = false, initMsg = "", initStyle = "",
                         <ButtonGroup>
                             <Button className="me-2" variant="primary" onClick={toggleRegisterMode}>
                                 {switcher}
+                            </Button>
+                        </ButtonGroup>
+                        <ButtonGroup>
+                            <Button variant="primary" onClick={() => {router.push('http://127.0.0.1:5000/auth/login/google')}}>
+                                <i className="bi bi-google"></i> Log in with Google
                             </Button>
                         </ButtonGroup>
                     </ButtonToolbar>

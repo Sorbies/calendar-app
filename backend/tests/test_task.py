@@ -25,15 +25,46 @@ def delete_all_tasks(token):
     except requests.exceptions.RequestException as e:
         print(f"Error deleting tasks: {e}")
 
+# Function to delete all todo lists
+def delete_all_todo_lists(token):
+    url = BASE_URL + '/todo_lists'
+    try:
+        response = requests.delete(url, headers=authenticated_request(token))
+        if response.status_code == 204:
+            print("All todo lists deleted successfully.")
+        elif response.status_code == 200:
+            print(f"Deleted todo lists response: {response.json()}")
+        else:
+            response.raise_for_status()  # Raise an exception for unexpected HTTP errors
+    except requests.exceptions.RequestException as e:
+        print(f"Error deleting todo lists: {e}")
+
+# Function to create a predefined todo list for testing
+def create_predefined_todo_list(token):
+    todo_list = {
+        'name': 'Household Chores'
+    }
+    url = BASE_URL + '/todo_lists'
+    try:
+        response = requests.post(url, json=todo_list, headers=authenticated_request(token))
+        response.raise_for_status()  # Raise an exception for HTTP errors
+        print(f"Todo list created successfully: {todo_list['name']}")
+        return response.json()['id']
+    except requests.exceptions.RequestException as e:
+        print(f"Error creating todo list: {e}")
+        print(f"Response text: {e.response.text}")  # Log the server response for debugging
+    return None
+
 # Function to create predefined tasks for testing
-def create_predefined_tasks(token):
+def create_predefined_tasks(token, todo_list_id):
     tasks = [
         {
             'title': 'Dishwashing',
             'content': 'Task 1: Wash dishes',
             'completed': False,
             'start_date_time': '2024-05-30T09:00:00',
-            'end_date_time': '2024-05-30T10:00:00'
+            'end_date_time': '2024-05-30T10:00:00',
+            'todo_list_id': todo_list_id
         },
     ]
     ids = []
@@ -50,15 +81,15 @@ def create_predefined_tasks(token):
     return ids
 
 # Function to test creating a new task
-def test_create_task(token, user):
+def test_create_task(token, todo_list_id):
     url = BASE_URL + '/tasks'
     data = {
         'title': 'Test Task',
         'content': 'Test Task Content',
-        'username': user,
         'completed': False,
         'start_date_time': '2024-06-01T09:00:00',
-        'end_date_time': '2024-06-01T10:00:00'
+        'end_date_time': '2024-06-01T10:00:00',
+        'todo_list_id': todo_list_id
     }
     try:
         response = requests.post(url, json=data, headers=authenticated_request(token))
@@ -126,14 +157,17 @@ def main():
     token = login_user('selma', 'pass4selma')
     if token:
         delete_all_tasks(token)  # Delete all preexisting tasks
-        ids = create_predefined_tasks(token)  # Create predefined tasks for testing
-        test_create_task(token, user='selma')
-        test_get_tasks(token)
-        if ids:
-            task_id = ids[0]  # Use the first created task ID
-            test_get_task(token, task_id)  # Test with the first created task ID
+        delete_all_todo_lists(token)  # Delete all preexisting todo lists
+        todo_list_id = create_predefined_todo_list(token)  # Create a predefined todo list for testing
+        if todo_list_id:
+            create_predefined_tasks(token, todo_list_id)  # Create predefined tasks for testing
+            test_create_task(token, todo_list_id)
+            test_get_tasks(token)
+            task_id = todo_list_id  # Use the first created task ID for testing
+            test_get_task(token, task_id)
             test_update_task(token, task_id, 'Updated Task Title', 'Updated Task Content', True)
             test_delete_task(token, task_id)
 
 if __name__ == "__main__":
     main()
+
