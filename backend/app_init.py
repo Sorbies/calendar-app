@@ -20,7 +20,9 @@ def create_app():
         from models.user import User
         from models.task import Task
         from models.calendar import Calendar
-        from models.event import Event, RecurringEvent
+        from models.event import Event #RecurringEvent
+        from models.notepad import Note
+        from models.todo_list import TodoList
   
         # from models.password_reset_token import PasswordResetToken
 
@@ -31,12 +33,16 @@ def create_app():
     from routes.auth_routes import auth_blueprint
     from routes.calendar_routes import calendars_blueprint
     from routes.event_routes import events_blueprint
+    from routes.notepad_routes import notes_blueprint
+    from routes.todo_list_routes import todo_lists_blueprint
  
 
     app.register_blueprint(tasks_blueprint)
     app.register_blueprint(auth_blueprint, url_prefix='/auth')
     app.register_blueprint(calendars_blueprint)
     app.register_blueprint(events_blueprint)
+    app.register_blueprint(notes_blueprint)
+    app.register_blueprint(todo_lists_blueprint)
 
 
     return app
