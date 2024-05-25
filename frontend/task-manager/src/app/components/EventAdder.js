@@ -6,10 +6,11 @@ import Modal from 'react-bootstrap/Modal';
 import Button from 'react-bootstrap/Button';
 import Dropdown from 'react-bootstrap/Dropdown';
 import { Form } from 'react-bootstrap';
+import { addEvent } from '../lib/eventStuff';
 
 import BigPlus from './BigPlus';
 
-export default function EventAdder() {
+export default function EventAdder({ calendars }) {
 
     const [showEvent, setShowEvent] = useState(false);
     const [showTask, setShowTask] = useState(false);
@@ -19,6 +20,13 @@ export default function EventAdder() {
 
     const handleCloseTask = () => setShowTask(false);
     const handleShowTask = () => setShowTask(true);
+
+    async function submitAddEvent(formData) {
+        const result = await addEvent(formData);
+        document.getElementById('addEventForm').reset();
+        if (!('error' in result)) {alert('Event successfully added.');}
+        else {alert('Error adding event.')}
+    }
 
     return (
         <>
@@ -39,28 +47,44 @@ export default function EventAdder() {
                     <Modal.Title>Add a new event</Modal.Title>
                 </Modal.Header>
                 <Modal.Body>
-                    <Form action={''} id='addTaskForm'>
-                        <Form.Group className="mb-3" controlId="taskTitle">
-                            <Form.Label>Task Title</Form.Label>
-                            <Form.Control type="text" placeholder="Enter title of a task" name="taskTitle" maxLength={100} />
+                    <Form action={submitAddEvent} id='addEventForm'>
+                        <Form.Group className="mb-3" controlId="calendarId">
+                        <Form.Label>Calendar</Form.Label>
+                            <Form.Select name="calendarId" aria-label='calendarSelect'>
+                                <option>Select a calendar...</option>
+                                {calendars.map((calendar) => {
+                                    return (
+                                        <option key={calendar['id']}
+                                                value={calendar['id']}>
+                                            {calendar['name']}
+                                        </option>
+                                    );
+                                })}
+                            </Form.Select>
                         </Form.Group>
 
-                        <Form.Group className="mb-3" controlId="taskDesc">
-                            <Form.Label>Task Description</Form.Label>
-                            <Form.Control as="textarea" rows={4} placeholder="Enter task description" name="taskDesc" maxLength={500} />
+                        <Form.Group className="mb-3" controlId="eventTitle">
+                            <Form.Label>Event Title</Form.Label>
+                            <Form.Control type="text" placeholder="Enter title of your event" name="eventTitle" maxLength={100} />
                         </Form.Group>
 
-                        <Form.Group className="mb-3" controlId="taskDueDate">
-                            <Form.Label>Due Date</Form.Label>
-                            <Form.Control type="datetime-local" name="taskDueDate" defaultValue={new Date().toISOString().substring(0, 16)} />
+                        <Form.Group className="mb-3" controlId="eventDesc">
+                            <Form.Label>Event Description</Form.Label>
+                            <Form.Control as="textarea" rows={4} placeholder="Enter event description" name="eventDesc" maxLength={500} />
                         </Form.Group>
 
-                        <Form.Group className="mb-3" controlId="todoId">
-                            <Form.Control type="hidden" name="todoId" value={''} />
+                        <Form.Group className="mb-3" controlId="eventStartDate">
+                            <Form.Label>Event Start Date</Form.Label>
+                            <Form.Control type="datetime-local" name="eventStartDate" defaultValue={new Date().toISOString().substring(0, 16)} />
+                        </Form.Group>
+
+                        <Form.Group className="mb-3" controlId="eventEndDate">
+                            <Form.Label>Event End Date</Form.Label>
+                            <Form.Control type="datetime-local" name="eventEndDate" defaultValue={new Date().toISOString().substring(0, 16)} />
                         </Form.Group>
 
                         <Form.Group>
-                            <Button variant="primary" type='submit' name='submitAddTask' onClick={''}>
+                            <Button variant="primary" type='submit' name='submitAddEvent' onClick={handleCloseEvent}>
                                 Add Task
                             </Button>
                         </Form.Group>

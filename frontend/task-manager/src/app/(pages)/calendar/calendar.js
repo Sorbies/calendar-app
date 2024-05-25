@@ -1,5 +1,5 @@
 "use client";
-import React, { useCallback, useState } from "react";
+import React, { useCallback, useState, useEffect } from "react";
 import { Calendar as BigCalendar, momentLocalizer } from "react-big-calendar";
 import moment from "moment";
 import "react-big-calendar/lib/css/react-big-calendar.css";
@@ -36,12 +36,36 @@ const handleSelectEvent = (event) => {
 };
 
 
-export default function Calendar(props) {
+export default function Calendar({ events, calendars }) {
   // functional, but doesnt actually add the event yet
   // needs to be connected to the db of the users events
-  const [myEvents, setEvents] = useState(events);
 
-  return <BigCalendar {...props} localizer={localizer} />;
+  function colorCalendarEvents(event, start, end, isSelected) {
+    const relevantCalendar = calendars.filter(calendar => calendar['id'] == event['calendar_id'])[0];
+    const relevantColor = relevantCalendar['color'];
+
+    // Ensure the color is a valid CSS color string
+    if (typeof relevantColor !== 'string') {
+      console.error('Invalid color value:', relevantColor);
+    }
+
+    const style = {
+      backgroundColor: relevantColor,
+    }
+    return { style: style };
+  }
+
+  return (
+    <BigCalendar
+      defaultView={"month"} //something to consider
+      events={events}
+      startAccessor="start"
+      endAccessor="end"
+      style={{ margin: "50px" }}
+      selectableF
+      onSelectEvent={handleSelectEvent}
+      onSelectSlot={handleSelectSlot}
+      eventPropGetter={colorCalendarEvents}
+      localizer={localizer} />
+  );
 }
-
-export { handleSelectSlot, handleSelectEvent };
