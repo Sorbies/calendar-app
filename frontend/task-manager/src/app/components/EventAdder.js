@@ -85,7 +85,7 @@ export default function EventAdder({ calendars }) {
 
                         <Form.Group>
                             <Button variant="primary" type='submit' name='submitAddEvent' onClick={handleCloseEvent}>
-                                Add Task
+                                Add Event
                             </Button>
                         </Form.Group>
                     </Form>
