@@ -1,9 +1,7 @@
+import { redirect } from "next/navigation";
 
 export default function Home() {
+  redirect("/home");
 
-  return (
-    <>
-      This is the HOME page
-    </>
-  );
+  return "You shouldn't see this!";
 }

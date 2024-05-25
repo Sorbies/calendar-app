@@ -1,11 +1,10 @@
-import "bootstrap/dist/css/bootstrap.min.css";
+import "bootstrap/dist/css/bootstrap.css";
 import "bootstrap-icons/font/bootstrap-icons.css";
 
-import Sidebar from "./components/sidebar";
 
 import "./globals.css";
-import Header from "./Header.js";
 import Head from 'next/head';
+import BootstrapJS from "@/app/components/BootstrapJS";
 
 export const metadata = {
   title: "IMPERIUM",
@@ -20,10 +19,10 @@ export default function RootLayout({ children }) {
         <meta name="description" content={metadata.description} />
         <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500&display=swap" />
       </Head>
-
-      <Header />
-      <Sidebar />
-      {children}
+      <body style={{ position: 'relative' }}>
+        <BootstrapJS />
+        {children}
+      </body>
     </html>
   );
 }

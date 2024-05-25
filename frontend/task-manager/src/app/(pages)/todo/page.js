@@ -1,9 +1,13 @@
-'use client'
+import Todo from "./todo";
 
-export default function Page() {
+import { verifyLogin } from "@/app/lib/authenticationStuff";
+
+export default async function Page() {
+    await verifyLogin();
+
     return (
         <>
-            This is the TODO page
+            <Todo/>
         </>
     );
 }
