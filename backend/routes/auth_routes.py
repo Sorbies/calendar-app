@@ -3,6 +3,8 @@ from flask import Blueprint, request, jsonify, current_app, redirect, url_for, s
 from models.user import User
 from app_init import db, oauth
 from functools import wraps
+import uuid
+
 
 auth_blueprint = Blueprint('auth', __name__)
 
@@ -60,25 +62,39 @@ def secured_route(current_user):
 def login_google():
     google = oauth.create_client('google')
     redirect_uri = url_for('auth.auth_google', _external=True)
-    return google.authorize_redirect(redirect_uri)
+    state = oauth.google.authorize_redirect(redirect_uri)
+    current_app.logger.info(f"State sent: {state}")
+    return state
 
-@auth_blueprint.route('/auth/google')
+
+@auth_blueprint.route('/google')
 def auth_google():
-    google = oauth.create_client('google')
-    token = google.authorize_access_token()
-    resp = google.get('userinfo')
-    user_info = resp.json()
-    session['email'] = user_info['email']
+    try:
+        google = oauth.create_client('google')
+        state = request.args.get('state')
+        current_app.logger.info(f"State received: {state}")
+        token = google.authorize_access_token()
+        resp = google.get('https://www.googleapis.com/oauth2/v3/userinfo')
+        user_info = resp.json()
+        current_app.logger.info(f"User info received: {user_info}")
 
-    # Here you can handle user registration/login in your database
-    user = User.query.filter_by(email=user_info['email']).first()
-    if not user:
-        user = User(username=user_info['email'], email=user_info['email'])
-        db.session.add(user)
-        db.session.commit()
+        if 'email' not in user_info:
+            raise ValueError("Email not found in user info")
 
-    token = user.generate_token()
-    return jsonify({'message': 'Login successful', 'token': token})
+        session['email'] = user_info['email']
+
+        # Handle user registration/login in your database
+        user = User.query.filter_by(email=user_info['email']).first()
+        if not user:
+            user = User(username=user_info['email'], email=user_info['email'])
+            db.session.add(user)
+            db.session.commit()
+
+        token = user.generate_token()
+        return redirect(f'http://localhost:3000/dashboard?token={token}')
+    except Exception as e:
+        current_app.logger.error(f"Error in auth_google: {e}")
+        return jsonify({'error': 'Internal Server Error', 'message': str(e)}), 500
 
 @auth_blueprint.route('/logout')
 def logout():
@@ -87,7 +103,18 @@ def logout():
     return redirect('/')
 
 
-
-
-
-
+@auth_blueprint.route('/google-callback')
+def google_callback():
+    google = oauth.create_client('google')
+    token = google.authorize_access_token()
+    
+    # Fetch user data from Google People API
+    resp = google.get('https://people.googleapis.com/v1/people/me?personFields=genders,birthdays', token=token)
+    user_info = resp.json()
+    
+    session['user'] = {
+        'token': token,
+        'userinfo': user_info
+    }
+    
+    return redirect(url_for('auth.home'))
